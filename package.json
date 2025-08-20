@@ -7,9 +7,9 @@
     "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
-    "dev": "strapi develop",
+    "dev": "node ./scripts/render-dev-guard.js",
     "develop": "strapi develop",
-    "start": "strapi start",
+    "start": "node ./scripts/render-start.js",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"

@@ -1,26 +1,23 @@
-'use strict';
+"use strict";
 
 module.exports = {
   /**
    * An asynchronous register function that runs before
    * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
    */
   register(/*{ strapi }*/) {},
 
   /**
    * An asynchronous bootstrap function that runs before
    * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
    */
-  bootstrap(ctx = {}) {
-    const strapi = ctx.strapi;
+  bootstrap(options = {}) {
+    const { strapi } = options;
     try {
-      const host = process.env.HOST || (typeof strapi !== 'undefined' && strapi?.config?.get ? strapi.config.get('server.host') : undefined) || '0.0.0.0';
-      const port = process.env.PORT || (typeof strapi !== 'undefined' && strapi?.config?.get ? strapi.config.get('server.port') : undefined) || '1337';
+      const host =
+        process.env.HOST || (strapi && strapi.config && typeof strapi.config.get === 'function' ? strapi.config.get('server.host') : undefined) || '0.0.0.0';
+      const port =
+        process.env.PORT || (strapi && strapi.config && typeof strapi.config.get === 'function' ? strapi.config.get('server.port') : undefined) || '1337';
       const message = `Strapi resolving host=${host} port=${port}`;
       if (strapi && strapi.log && typeof strapi.log.info === 'function') {
         strapi.log.info(message);
