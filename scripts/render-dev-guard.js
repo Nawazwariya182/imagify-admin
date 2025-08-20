@@ -18,14 +18,13 @@ function run(cmd, args, env) {
 }
 
 if (isProd) {
-  // In production, ensure we start the production wrapper which binds to process.env.PORT
-  const script = path.join(__dirname, 'render-start.js');
-  // If someone wants a dry-run for testing, they can set RENDER_DEV_GUARD_DRY=1
+  // In production, start Strapi directly via npx to avoid relying on internal module paths.
+  // This ensures the runtime on Render runs the same command as a user would locally.
   if (process.env.RENDER_DEV_GUARD_DRY === '1') {
-    console.log('RENDER_DEV_GUARD_DRY=1 set — would run:', process.execPath, script);
+    console.log('RENDER_DEV_GUARD_DRY=1 set — would run: npx strapi start');
     process.exit(0);
   }
-  run(process.execPath, [script], {});
+  run('npx', ['strapi', 'start'], {});
 } else {
   // Local development: run strapi develop
   run('npx', ['strapi', 'develop'], {});
